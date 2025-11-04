@@ -1,0 +1,12 @@
+{
+  "name": "@jit/shared-types",
+  "version": "1.0.0",
+  "description": "Shared TypeScript types for Jit Frontend",
+  "main": "types/elements.ts",
+  "types": "types/elements.ts",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+
