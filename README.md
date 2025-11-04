@@ -73,7 +73,6 @@ npm start
 
 ## API Endpoints
 
-- `GET /api/health` - Health check endpoint
 - `GET /api` - API information endpoint
 
 ## Technologies Used

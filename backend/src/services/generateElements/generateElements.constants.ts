@@ -31,20 +31,22 @@ export const DEFAULT_BUTTON_STYLE = {
   fontWeight: '600',
 } as const;
 
-export const SYSTEM_PROMPT = `You are a UI assistant that generates UI element configurations based on natural language prompts.
+export const SYSTEM_PROMPT = `You are a UI assistant that generates HTML elements based on natural language prompts.
 You can generate various types of elements: buttons, input fields (text, email, password, number, etc.), textareas, selects, checkboxes, radio buttons, labels, and more.
 
 Return a JSON object with an "elements" array. Each element should have:
-- type: the element type (e.g., "button", "input", "textarea", "select", "checkbox", "radio", "label", etc.)
-- text: the label/text content (exactly as specified or inferred from the prompt)
-- style: a CSS style object with multiple design properties (e.g., {"backgroundColor": "#28a745", "color": "white", "borderRadius": "8px", "padding": "12px 24px", "fontSize": "16px", "border": "none", "cursor": "pointer"})
-- placeholder: for input fields, the placeholder text (if mentioned)
-- name: for form elements, the name attribute (if relevant)
-- onClick: for buttons, a brief description of what the button should do when clicked
+- html: a complete, valid HTML string for the element with inline styles applied
 
-For input elements, the type should specify the input type: "input-text", "input-email", "input-password", "input-number", etc.
+The HTML should:
+- Be a complete, self-contained HTML element (e.g., <button>, <input>, <textarea>, <label>, etc.)
+- Include all necessary attributes (type, placeholder, name, etc.)
+- Include inline style attributes with all CSS properties based on the prompt
+- Use proper HTML escaping for any text content
+- Be ready to be inserted directly into the DOM
 
-The style object should include all relevant CSS properties based on the prompt:
+For input elements, use the appropriate input type attribute (e.g., type="text", type="email", type="password", type="number").
+
+The inline styles should include all relevant CSS properties based on the prompt:
 - backgroundColor: background color (can be hex, CSS color name, or descriptive like "very dark")
 - color: text color
 - border: border style (e.g., "2px solid #e0e0e0", "none")
@@ -61,41 +63,24 @@ Return ONLY valid JSON, no other text. Example formats:
 {
   "elements": [
     {
-      "type": "button",
-      "text": "Save",
-      "style": {
-        "backgroundColor": "#28a745",
-        "color": "white",
-        "borderRadius": "8px",
-        "padding": "12px 24px",
-        "fontSize": "16px",
-        "fontWeight": "600",
-        "border": "none",
-        "cursor": "pointer"
-      },
-      "onClick": "Save the current document"
+      "html": "<button style=\"background-color: #28a745; color: white; border-radius: 8px; padding: 12px 24px; font-size: 16px; font-weight: 600; border: none; cursor: pointer;\">Save</button>"
     },
     {
-      "type": "input-text",
-      "text": "Name",
-      "style": {
-        "border": "2px solid #e0e0e0",
-        "borderRadius": "8px",
-        "padding": "12px 16px",
-        "fontSize": "16px",
-        "width": "100%"
-      },
-      "placeholder": "Enter your name"
+      "html": "<div style=\"display: flex; flex-direction: column; gap: 8px; width: 100%;\"><label style=\"font-weight: 600; color: #333; font-size: 0.9em;\">Name</label><input type=\"text\" placeholder=\"Enter your name\" name=\"name\" style=\"border: 2px solid #e0e0e0; border-radius: 8px; padding: 12px 16px; font-size: 16px; width: 100%;\" /></div>"
     }
   ]
 }
 
 Important:
+- Return complete, valid HTML strings
+- Include all styling inline using the style attribute
+- For form elements with labels, wrap them in a container div
+- Use proper HTML escaping for special characters in text content
 - If the prompt mentions specific text, use that exact text
-- If the prompt mentions colors, sizes, or other design aspects, include them in the style object
-- Infer the element type from the prompt (e.g., "input text" -> type: "input-text", "button" -> type: "button")
+- If the prompt mentions colors, sizes, or other design aspects, include them in the inline styles
+- Infer the element type from the prompt (e.g., "input text" -> <input type="text">, "button" -> <button>)
 - Include comprehensive style properties to make elements look polished
-- If details are not specified, make reasonable defaults with complete style objects`;
+- If details are not specified, make reasonable defaults with complete inline styles`;
 
 export const ERROR_MESSAGES = {
   INVALID_PROMPT: 'Prompt must be a non-empty string',

@@ -27,12 +27,17 @@ export interface UIElement {
   onClick?: string;
 }
 
+export interface HTMLElement {
+  id: string;
+  html: string;
+}
+
 export interface GenerateElementsRequest {
   prompt: string;
 }
 
 export interface GenerateElementsResponse {
-  elements: UIElement[];
+  elements: HTMLElement[];
   prompt: string;
 }
 

@@ -3,6 +3,5 @@
  */
 export { ElementInput } from './ElementInput';
 export { ElementList } from './ElementList';
-export { ElementRenderer } from './ElementRenderer';
-export { ElementsPage } from './ElementsPage';
+export { HTMLElementRenderer } from './HTMLElementRenderer';
 

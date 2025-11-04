@@ -1,33 +1,21 @@
-import type { GenerateElementsResponse, UIElement } from '../../../../shared/types/elements.js';
+import type { GenerateElementsResponse, HTMLElement } from '../../../../shared/types/elements.js';
 import { OpenApiService } from '../openApi/openApi.js';
 import {
-    DEFAULT_BUTTON_STYLE,
-    DEFAULT_ELEMENT_VALUES,
     ERROR_MESSAGES,
     OPENAI_CONFIG,
     SYSTEM_PROMPT
 } from './generateElements.constants.js';
 
-/**
- * GenerateElements Service Class
- * Extends OpenApiService to generate UI elements from natural language prompts
- */
 export class GenerateElementsService extends OpenApiService {
   constructor() {
     super(); // Initialize parent OpenApiService
   }
 
-  /**
-   * Generate UI elements from natural language prompts using OpenAI
-   * @param {string} prompt - Natural language description of elements to create
-   * @returns {Promise<UIElement[]>} Array of element configurations
-   */
-  async generateElements(prompt: string): Promise<UIElement[]> {
+  async generateElements(prompt: string): Promise<HTMLElement[]> {
     if (!prompt || typeof prompt !== 'string') {
       throw new Error(ERROR_MESSAGES.INVALID_PROMPT);
     }
 
-    // Get OpenAI client from parent class
     const openaiClient = this.getClient();
 
     try {
@@ -58,19 +46,12 @@ export class GenerateElementsService extends OpenApiService {
     }
   }
 
-  private processElements(elementsData: UIElement[]): UIElement[] {
-    return elementsData.map((element: UIElement, index: number) => {
-      const baseElement: UIElement = {
+  private processElements(elementsData: Array<{ html: string }>): HTMLElement[] {
+    return elementsData.map((element: { html: string }, index: number) => {
+      return {
         id: this.generateElementId(index),
-        type: element.type || DEFAULT_ELEMENT_VALUES.TYPE,
-        text: element.text || DEFAULT_ELEMENT_VALUES.TEXT,
-        style: element.style || DEFAULT_BUTTON_STYLE,
-        placeholder: element.placeholder,
-        name: element.name,
-        onClick: element.onClick,
+        html: element.html,
       };
-
-      return baseElement;
     });
   }
 
