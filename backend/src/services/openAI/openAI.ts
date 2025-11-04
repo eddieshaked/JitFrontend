@@ -1,7 +1,9 @@
 import OpenAI from 'openai';
-import { ERROR_MESSAGES, LOG_MESSAGES } from './openApi.constants.js';
+import { ERROR_MESSAGES, LOG_MESSAGES } from '../../config/constants.js';
+import { AppError } from '../../middleware/errorHandler.js';
+import { logger } from '../../utils/logger.js';
 
-export class OpenApiService {
+export class OpenAIService {
   private client: OpenAI | null = null;
 
   constructor() {
@@ -9,10 +11,9 @@ export class OpenApiService {
   }
 
   private initialize(): void {
-
     const apiKey = process.env.OPENAI_API_KEY?.trim();
     if (!apiKey) {
-      throw new Error(ERROR_MESSAGES.MISSING_API_KEY);
+      throw new AppError(ERROR_MESSAGES.MISSING_API_KEY, 500);
     }
 
     try {
@@ -20,11 +21,11 @@ export class OpenApiService {
         apiKey: apiKey,
       });
 
-      console.log(LOG_MESSAGES.CLIENT_INITIALIZED);
+      logger.info(LOG_MESSAGES.CLIENT_INITIALIZED);
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      console.error(`${LOG_MESSAGES.INITIALIZATION_ERROR}:`, errorMessage);
-      throw new Error(`${ERROR_MESSAGES.INITIALIZATION_FAILED}: ${errorMessage}`);
+      logger.error(LOG_MESSAGES.INITIALIZATION_ERROR, { error: errorMessage });
+      throw new AppError(`${ERROR_MESSAGES.INITIALIZATION_FAILED}: ${errorMessage}`, 500);
     }
   }
 

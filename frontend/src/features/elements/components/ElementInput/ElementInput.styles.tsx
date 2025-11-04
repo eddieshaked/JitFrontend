@@ -60,6 +60,16 @@ export const SubmitButton = styled.button`
   }
 `;
 
+export const CharacterCount = styled.span<{ $isMaxLength: boolean }>`
+  display: block;
+  text-align: right;
+  font-size: 0.85em;
+  color: ${({ $isMaxLength }) => ($isMaxLength ? '#dc3545' : '#666')};
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-weight: ${({ $isMaxLength }) => ($isMaxLength ? '600' : '400')};
+`;
+
 export const ErrorMessage = styled.p`
   color: #dc3545;
   margin-top: 10px;

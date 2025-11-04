@@ -8,28 +8,7 @@ export const OPENAI_CONFIG = {
   RESPONSE_FORMAT: { type: 'json_object' as const },
 } as const;
 
-export const DEFAULT_ELEMENT_VALUES = {
-  COLOR: '#667eea',
-  SIZE: 'medium',
-  TYPE: 'button',
-  TEXT: '',
-} as const;
-
-export const SIZE_MAP: Record<string, { padding: string; fontSize: string }> = {
-  'small': { padding: '8px 16px', fontSize: '0.875em' },
-  'medium': { padding: '12px 24px', fontSize: '1em' },
-  'large': { padding: '16px 32px', fontSize: '1.125em' },
-  'very small': { padding: '6px 12px', fontSize: '0.75em' },
-  'very large': { padding: '20px 40px', fontSize: '1.25em' },
-} as const;
-
-export const DEFAULT_BUTTON_STYLE = {
-  color: 'white',
-  border: 'none',
-  borderRadius: '10px',
-  cursor: 'pointer',
-  fontWeight: '600',
-} as const;
+// Removed unused constants: DEFAULT_ELEMENT_VALUES, SIZE_MAP, DEFAULT_BUTTON_STYLE
 
 export const SYSTEM_PROMPT = `You are a UI assistant that generates HTML elements based on natural language prompts.
 You can generate various types of elements: buttons, input fields (text, email, password, number, etc.), textareas, selects, checkboxes, radio buttons, labels, and more.
@@ -82,10 +61,5 @@ Important:
 - Include comprehensive style properties to make elements look polished
 - If details are not specified, make reasonable defaults with complete inline styles`;
 
-export const ERROR_MESSAGES = {
-  INVALID_PROMPT: 'Prompt must be a non-empty string',
-  NO_RESPONSE_CONTENT: 'No content in OpenAI response',
-  PARSE_ERROR: 'Could not parse element data from OpenAI response',
-  GENERATION_FAILED: 'Failed to generate elements',
-} as const;
+// Error messages moved to config/constants.ts
 

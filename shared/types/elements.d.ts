@@ -24,11 +24,15 @@ export interface UIElement {
     name?: string;
     onClick?: string;
 }
+export interface HTMLElement {
+    id: string;
+    html: string;
+}
 export interface GenerateElementsRequest {
     prompt: string;
 }
 export interface GenerateElementsResponse {
-    elements: UIElement[];
+    elements: HTMLElement[];
     prompt: string;
 }
 export interface ProcessButtonsRequest {
